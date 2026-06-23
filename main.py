@@ -1,18 +1,13 @@
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-from pydantic import BaseModel, Field
-from typing import Annotated
+x = np.random.normal(size=1000)
+y = np.random.normal(size=1000)
 
-class CourseRegistration(BaseModel):
-    # Username must be between 3 and 15 characters
-    username: Annotated[str, Field(min_length=3, max_length=15, title = "name of the user",description="Give the name of the user in 15 characters", examples=["jackob", "john"])]
-    
-    # Age must be at least 18
-    age: Annotated[int, Field(gt=17, title="Student Age")] 
+plt.hexbin(x, y, gridsize=20, cmap='Greens')
 
-# If we try to use a 2-letter username, Pydantic will raise a validation error
-try:
-    user = CourseRegistration(username="Nadeem",age = 18)
-except Exception as e:
-    print(f"Validation failed: {e}")
-else:
-    print("user registered")
+cb = plt.colorbar()
+
+plt.show()
